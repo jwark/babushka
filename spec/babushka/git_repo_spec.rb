@@ -338,16 +338,34 @@ describe GitRepo, '#ahead?' do
   end
   context "when remote branch exists" do
     before(:all) {
+      `pwd`.tapp
+      `git rev-parse HEAD`.tapp
+      `git log --all --oneline --decorate -10`.tapp
       PathHelpers.cd(tmp_prefix / 'repos/a') {
+        `pwd`.tapp
+        `git rev-parse HEAD`.tapp
+        `git log --all --oneline --decorate -10`.tapp
         ShellHelpers.shell "git push origin topic"
+        `pwd`.tapp
+        `git rev-parse HEAD`.tapp
+        `git log --all --oneline --decorate -10`.tapp
         ShellHelpers.shell 'echo "Ch-ch-ch-changes" >> content.txt'
+        `pwd`.tapp
+        `git rev-parse HEAD`.tapp
+        `git log --all --oneline --decorate -10`.tapp
         ShellHelpers.shell 'git commit -a -m "Changes!"'
+        `pwd`.tapp
+        `git rev-parse HEAD`.tapp
+        `git log --all --oneline --decorate -10`.tapp
       }
     }
     it "should have a local topic branch" do
       subject.current_branch.should == 'topic'
     end
     it "should return true if there are unpushed commits on the current branch" do
+      `pwd`.tapp
+      `git rev-parse HEAD`.tapp
+      `git log --all --oneline --decorate -10`.tapp
       subject.remote_branch_exists?.should be_true
       subject.should be_ahead
     end
